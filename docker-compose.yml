@@ -1,0 +1,26 @@
+services:
+  #Backend API
+  smart-brain-api:
+    container_name: backend
+    build: ./
+    command: npm start
+    working_dir: /usr/src/smart-brain-api
+    environment:
+      POSTGRES_URI: postgres://asylcreek:thebusiness@postgres:5432/smartbraindocker
+    links:
+      - postgres
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./:/usr/src/smart-brain-api
+
+  #Postgres DB
+  postgres:
+    build: ./postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: smartbraindocker
+      POSTGRES_USER: asylcreek
+      POSTGRES_PASSWORD: thebusiness
